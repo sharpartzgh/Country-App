@@ -6,7 +6,7 @@ import Homepage from './Pages/Homepage'
 function App() {
 
   return (
-    <div className='flex flex-col justify-center items-center w-screen h-screen px-24 dark:bg-slate-800' >
+    <div className=' bg-[#FAFAFA] flex flex-col p items-center w-screen h-screen px-24 dark:bg-[#202C36]' >
       <Homepage />
     </div>
   )

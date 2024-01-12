@@ -3,10 +3,11 @@
 import React from 'react'
 import { IoMoonOutline } from "react-icons/io5";
 import { BsSun } from "react-icons/bs";
+import Search from './Search';
 
 const Header = ({darkMode, setDarkMode}) => {
   return (
-    <header className='flex  font-Nunito text-[#111517] bg-[#FFFFFF] dark:bg-[#2B3844] dark:text-[#FFFFFF] w-screen justify-around py-6 shadow'>
+    <header className='flex  font-Nunito text-[#111517] bg-[#FFFFFF] dark:bg-[#2B3844] dark:text-[#FFFFFF] w-screen justify-around py-6 shadow-lg'>
       <div>
         <h1 className=' text-[24px] font-extrabold mobile:text-[18px]'>Where in the world?</h1>
       </div>

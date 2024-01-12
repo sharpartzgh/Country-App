@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import Header from '../components/Header';
+import Search from '../components/Search';
 
 const Homepage = () => {
   const [darkMode, setDarkMode] = useState(false);
@@ -23,8 +24,9 @@ const Homepage = () => {
 
 
   return (
-    <div className='relative bg-[#FAFAFA]'>
+    <div className='relative'>
       <Header darkMode={darkMode} setDarkMode={setDarkMode} />
+      <Search darkMode={darkMode} setDarkMode={setDarkMode} />
     </div>
   );
 };

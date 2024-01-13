@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import Header from '../components/Header';
 import Search from '../components/Search';
+import Card from '../components/Card';
 
 const Homepage = () => {
   const [darkMode, setDarkMode] = useState(false);
@@ -27,6 +28,7 @@ const Homepage = () => {
     <div className='relative'>
       <Header darkMode={darkMode} setDarkMode={setDarkMode} />
       <Search darkMode={darkMode} setDarkMode={setDarkMode} />
+      <Card darkMode={darkMode} setDarkMode={setDarkMode} />
     </div>
   );
 };

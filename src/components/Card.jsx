@@ -4,11 +4,17 @@ import React from 'react'
 import countryflag from "../images/Germany.png"
 
 
-const Card = ({darkMode, setDarkMode}) => {
+const Card = ({darkMode, setDarkMode, country}) => {
+
+  // if (!country) {
+  //   return null; // or return a placeholder, error message, or loading state
+  // }
+ 
+
   return (
-    <div className=' bg-white  font-Nunito mobile:m-auto mobile:mt-10 w-[264px] rounded-md shadow-lg tablet:mt-10  tablet:mx-24'>
+    <div className=' bg-white font-Nunito mobile:m-auto mobile:mt-10 w-[260px] rounded-md shadow-lg tablet:mt-5 m-auto'>
       <div>
-         <img src={countryflag} alt="germany-flag" className=' rounded-tr-md rounded-tl-md' />
+      <img src={countryflag} alt='flag' className='rounded-tr-md rounded-tl-md'/>
       </div>
       <div className=' my-4 pl-8'>
         <h1 className=' text-[18px] font-extrabold' >Germany</h1>

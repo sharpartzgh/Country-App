@@ -6,7 +6,7 @@ import Homepage from './Pages/Homepage'
 function App() {
 
   return (
-    <div className=' bg-[#FAFAFA] p items-center w-full min-h-screen dark:bg-[#202C36]' >
+    <div className=' bg-[#FAFAFA]  items-center w-full min-h-screen dark:bg-[#202C36]' >
       <Homepage />
     </div>
   )

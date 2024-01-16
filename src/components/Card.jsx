@@ -2,7 +2,7 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable no-unused-vars */
 import React, { useEffect, useState } from 'react'
-import countryflag from "../images/Germany.png"
+import { RxReload } from "react-icons/rx";
 import axios from 'axios'
 
 
@@ -36,12 +36,15 @@ const Card = ({darkMode, setDarkMode}) => {
    fetchAllCountries()
  },[])
 
-//  bg-white font-Nunito mobile:m-auto mobile:mt-10 w-[260px] rounded-md shadow-lg tablet:flex tablet:flex-wrap dark:bg-[#2B3844] dark:text-[#fff]
-
-//h-[200px] w-[260px] bg-white flex flex-col font-Nunito mobile:m-auto mobile:mt-10 rounded-md shadow-lg tablet:flex tablet:flex-wrap dark:bg-[#2B3844] dark:text-[#fff]
 
   return (
-    <div className='flex gap-2 px-6 justify-center items-start flex-wrap mt-10 '>
+    <div className='flex gap-2 px-6 justify-center items-start flex-wrap mt-10 pb-20 '>
+      {
+        isLoading? <div className=' animate-spin dark:text-white'><RxReload className=' dark:text-white'/></div> : null
+      }
+      {
+        error? <div>{error}</div> : null
+      }
       {
         countries?.map((country) => (
          <div className='top w-60 mt-2 ml-2 flex-wrap bg-white dark:bg-[#2B3844] dark:text-[#fff] font-Nunito shadow-lg'>

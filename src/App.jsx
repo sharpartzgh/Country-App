@@ -32,7 +32,7 @@ function App() {
 
   return (
     <>
-      <div className='  dark:bg-[#202C36] w-full h-full'>
+      <div className='  dark:bg-[#202C36] w-full min-h-screen'>
           <header className='flex  font-Nunito text-[#111517] bg-[#FFFFFF] dark:bg-[#2B3844] dark:text-[#FFFFFF] w-full justify-between py-6 px-10 shadow-lg'>
               <div>
                 <h1 className=' text-[24px] font-extrabold mobile:text-[18px]'>Where in the world?</h1>

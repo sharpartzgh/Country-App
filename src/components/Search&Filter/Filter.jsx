@@ -11,6 +11,7 @@ const Filter = ({ onRegionChange }) => {
   const [countries, setCountries] = useState([]);
   const [error, setError] = useState('');
 
+  // using this function to get all the countries within that region
   const getCountriesByRegion = async (region) => {
     try {
       setIsLoading(true);
@@ -34,7 +35,7 @@ const Filter = ({ onRegionChange }) => {
       console.error('Error fetching data:', error);
     }
   };
-  
+   // whiles this right here fetches the region
   const getRegion = async () => {
     try {
       setIsLoading(true);
@@ -54,6 +55,7 @@ const Filter = ({ onRegionChange }) => {
     }
   };
 
+   //  then we use this very function to switch between regions
   const handleRegionChange = (event) => {
     const selectedRegion = event.target.value;
     setSelectedRegion(selectedRegion);
@@ -63,7 +65,7 @@ const Filter = ({ onRegionChange }) => {
       // Call the onRegionChange prop with the selected region
       onRegionChange(selectedRegion);
     } else {
-      setCountries(countries); // Reset countries if no region is selected
+      setCountries(countries); // Reset countries if no region is selected //honestly when filter by region is clicked was expecting an auto reset without refreshing it though lol
     }
   };
 
@@ -76,7 +78,7 @@ const Filter = ({ onRegionChange }) => {
   return (
     <>
       <div>
-        <div className='inline-flex relative bg-[#261a1a] px-4 mobile:mt-10 gap-4 items-center justify-between dark:bg-[#2B3844] rounded-md shadow-lg bg-white'>
+        <div className='inline-flex relative px-4 mobile:mt-10 gap-4 items-center justify-between dark:bg-[#2B3844] rounded-md shadow-lg bg-white'>
           <select
             className='outline-none  appearance-none py-4 px-3 dark:bg-[#2B3844] dark:text-[#fff]'
             onChange={handleRegionChange}

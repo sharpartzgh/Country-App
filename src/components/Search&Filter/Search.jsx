@@ -2,11 +2,13 @@ import React, { useState } from 'react';
 import { MdSearch } from 'react-icons/md';
 
 const Search = ({ onSearch }) => {
-  const [searchTerm, setSearchTerm] = useState('');
+  const [input, setInput] = useState('');
 
-  const handleSearch = () => {
-    onSearch(searchTerm);
+  const handleSearch = (event) => {
+    event.preventDefault()
+    onSearch(input)
   };
+ 
 
   return (
     <div>
@@ -14,16 +16,17 @@ const Search = ({ onSearch }) => {
         <span>
           <MdSearch className='w-7 h-7 dark:text-[#fff]' />
         </span>
+        <form onSubmit={handleSearch}>
         <input
           type='search'
           name='search'
           id='countries'
           placeholder='Search for a country'
           className='outline-none bg-[#fff] dark:bg-[#2B3844] font-semibold'
-          value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
-          onClick={handleSearch}
+          value={input}
+          onChange={(event) => setInput(event.target.value)}
         />
+        </form>
       </div>
     </div>
   );

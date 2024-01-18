@@ -5,7 +5,7 @@ import React, { useEffect, useState } from 'react';
 import { RxReload } from 'react-icons/rx';
 import axios from 'axios';
 
-const Card = ({ darkMode, setDarkMode, selectedRegion }) => {
+const Card = ({ selectedRegion, searchedCountry }) => {
   const [countries, setCountries] = useState([]);
   const [isLoading, setIsLoading] = useState([]);
   const [error, setError] = useState('');
@@ -50,8 +50,11 @@ const Card = ({ darkMode, setDarkMode, selectedRegion }) => {
       </div>
       ) : null}
       {error ? <div>{error}</div> : null}
-      {countries?.map((country) => (
-        <div key={country.name.common} className='top mobile:w-[230px] mobile:m-auto rounded-lg bg-white dark:bg-[#2B3844] dark:text-[#fff] h-[300px] font-Nunito shadow-lg '>
+      
+      {/* filtering country by search request */}
+
+     { countries?.map((country) => (
+        <div key={country.alpha3Code} className='top mobile:w-[230px] mobile:m-auto rounded-lg bg-white dark:bg-[#2B3844] dark:text-[#fff] h-[300px] font-Nunito shadow-lg '>
           <div>
             <img src={country.flags.png} alt={country.name.common} className=' w-[100%] h-[120px] rounded-t-lg ' />
           </div>

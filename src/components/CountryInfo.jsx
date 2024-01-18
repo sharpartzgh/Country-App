@@ -48,7 +48,7 @@ const CountryInfo = () => {
               <>
               <div key={countryInfo.id} className="image__wrapper">
                   <div className="card__wrapper">
-                    <img src={country.flags.png} alt={country.name.common} className='h-80' />
+                    <img src={country.flags.png} alt={country.name.common} className='' />
                   </div>
               </div>
               <div className="info__wrapper">

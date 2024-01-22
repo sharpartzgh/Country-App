@@ -3,10 +3,9 @@ import { useEffect, useState } from 'react';
 import './App.css'
 import Homepage from './Pages/Homepage'
 import Infopage from './Pages/Infopage'
-import { Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router,  Routes, Route, } from 'react-router-dom';
 import { IoMoonOutline } from "react-icons/io5";
 import { BsSun } from "react-icons/bs";
-import Card from './components/Card';
 
 
 function App() {
@@ -43,16 +42,13 @@ function App() {
                 <span className=' font-semibold text-[24px] mobile:text-[16px] text '>{darkMode ? 'Light Mode' : 'Dark Mode'}</span>
               </div>
             </header>
-            <div></div>
           <div>
-            <Routes>
-              <Route path='/' element={<Homepage/>}/>
+          
+              <Routes>
+                <Route path='/' element={<Homepage/>}/>
+                <Route path="/infopage/:countryName" element={<Infopage/>}/> 
             </Routes>
-          </div>
-          <div>  
-          <Routes> 
-            <Route path='/infopage' element={<Infopage/>}/> 
-          </Routes>
+    
         </div>
       </div>
     </>

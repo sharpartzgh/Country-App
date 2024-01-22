@@ -1,14 +1,34 @@
+/* eslint-disable react/prop-types */
 import React, { useState } from 'react';
 import { MdSearch } from 'react-icons/md';
 
-const Search = ({ onSearch }) => {
+const Search = ({ onSearch, setSearchedCountry, fetchAllCountries }) => {
   const [input, setInput] = useState('');
 
   const handleSearch = (event) => {
-    event.preventDefault()
-    onSearch(input)
+    
+    event.preventDefault() 
+    if (input.trim() !== '') {
+      setSearchedCountry(null);
+      onSearch(input);
+    } else {
+      setSearchedCountry(null); // Resetting the searched country
+      fetchAllCountries();    // Fetch all countries when the input is empty
+    }
   };
- 
+
+  const handleInputChange = (event) => {
+    setInput(event.target.value);
+    // Manually trigger form submission when input is cleared
+    if (event.target.value.trim() === '') {
+      handleSearch();
+    } else if (event.target.value){
+      handleSearch(event)
+    } else {
+      setSearchedCountry(null); // Resetting the searched country
+      fetchAllCountries()
+    }
+  };
 
   return (
     <div>
@@ -24,7 +44,7 @@ const Search = ({ onSearch }) => {
           placeholder='Search for a country'
           className='outline-none bg-[#fff] dark:bg-[#2B3844] font-semibold'
           value={input}
-          onChange={(event) => setInput(event.target.value)}
+          onChange={handleInputChange}
         />
         </form>
       </div>

@@ -1,11 +1,15 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable react/jsx-key */
 /* eslint-disable react/prop-types */
 /* eslint-disable no-unused-vars */
 import React, { useEffect, useState } from 'react';
 import { RxReload } from 'react-icons/rx';
 import axios from 'axios';
+import { Link } from 'react-router-dom';
 
-const Card = ({ selectedRegion, searchedCountry }) => {
+
+
+const Card = ({ selectedRegion, searchedCountry, setSearchedCountry }) => {
   const [countries, setCountries] = useState([]);
   const [isLoading, setIsLoading] = useState([]);
   const [error, setError] = useState('');
@@ -16,7 +20,7 @@ const Card = ({ selectedRegion, searchedCountry }) => {
       const response = await axios.get('https://restcountries.com/v3.1/all');
 
       if (!response) {
-        return Error('Something went wrong'); // or return a placeholder, error message, or loading state
+        throw new Error('Something went wrong'); // or return a placeholder, error message, or loading state
       }
       const data = response.data; // assign the response from the server to data
       
@@ -27,6 +31,7 @@ const Card = ({ selectedRegion, searchedCountry }) => {
 
       setCountries(filteredCountries);
       setIsLoading(false); // Set loading to false whether the request succeeds or fails
+
     } catch (error) {
       // handle error
       setError(error.message);
@@ -36,7 +41,7 @@ const Card = ({ selectedRegion, searchedCountry }) => {
 
   useEffect(() => {
     fetchAllCountries();
-  }, [selectedRegion]);
+  }, [selectedRegion, searchedCountry]);
 
   return (
     <>
@@ -49,12 +54,12 @@ const Card = ({ selectedRegion, searchedCountry }) => {
         </button>
       </div>
       ) : null}
-      {error ? <div>{error}</div> : null}
       
-      {/* filtering country by search request */}
+      {/* filtering country by search request */} 
 
-     { countries?.map((country) => (
-        <div key={country.alpha3Code} className='top mobile:w-[230px] mobile:m-auto rounded-lg bg-white dark:bg-[#2B3844] dark:text-[#fff] h-[300px] font-Nunito shadow-lg '>
+      { searchedCountry? searchedCountry.map((country, index) => (
+      <Link key={index}  to={`/infopage/${country.name.common}`}>
+      <div className='top mobile:w-[230px] mobile:m-auto rounded-lg bg-white dark:bg-[#2B3844] dark:text-[#fff] h-[300px] font-Nunito shadow-lg '>
           <div>
             <img src={country.flags.png} alt={country.name.common} className=' w-[100%] h-[120px] rounded-t-lg ' />
           </div>
@@ -74,7 +79,30 @@ const Card = ({ selectedRegion, searchedCountry }) => {
               <p className=' font-semibold'>Capital:</p> <span className=' w-full text-wrap'>{country.capital}</span>
             </div>
           </div>
-        </div>
+        </div></Link>
+      )) : countries.map((country, index) => (
+        <Link  key={index} to={`/infopage/${country.name.common}`}>
+        <div  className='top mobile:w-[230px] mobile:m-auto rounded-lg bg-white dark:bg-[#2B3844] dark:text-[#fff] h-[300px] font-Nunito shadow-lg '>
+          <div>
+            <img src={country.flags.png} alt={country.name.common} className=' w-[100%] h-[120px] rounded-t-lg ' />
+          </div>
+          <div className=' my-4 pl-5'>
+            <h1 className=' text-[14px] w-full font-extrabold'>{country.name.common}</h1>
+          </div>
+          <div className=' flex flex-col gap-2 pl-5 text-[14px]'>
+            <div className='flex gap-2'>
+              <p className=' font-semibold'>Population:</p>
+              <span>{country.population}</span>
+            </div>
+            <div className='flex gap-2'>
+              <p className=' font-semibold'>Region:</p>
+              <span>{country.region}</span>
+            </div>
+            <div className='flex gap-2 mb-5 '>
+              <p className=' font-semibold'>Capital:</p> <span className=' w-full text-wrap'>{country.capital}</span>
+            </div>
+          </div>
+        </div></Link>
       ))}
     </div>
     </>

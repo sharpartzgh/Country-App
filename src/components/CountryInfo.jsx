@@ -1,43 +1,14 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable no-undef */
-import axios from 'axios'
-import React, { useEffect, useState } from 'react'
 import { RxReload } from 'react-icons/rx'
 
 
 
-const CountryInfo = () => {
 
-  const [countryInfo, setCountryInfo] = useState([])
-  const [isLoading, setIsLoading] = useState(false)
-  const [error, setError] = useState('')
+const CountryInfo = ({ countryInfo, isLoading, error }) => {
+
   
-  const getCountryInfo = async() => {
-
-    try {
-      setIsLoading(true)
-      const response = await axios.get('https://restcountries.com/v3.1/all')
-      if(!response){
-        return error('Something went wrong')
-      }
-      const data = response.data.slice(0,1)
-      console.log(data)
-      setCountryInfo(data)
-      setIsLoading(false)
-
-    } catch (error) {
-      setIsLoading(false)
-      setError(error.message)
-      console.error('Error fetching data:', error);
-    }
-  }
-
-  useEffect(() => {
-    getCountryInfo()
-  },[])
-  
-
   return (
     <>
       <div className="Country_info_wrapper font-Nunito mt-10 gap-10 mobile:flex-col dark:text-white">
@@ -50,10 +21,9 @@ const CountryInfo = () => {
           </div>
           ) : null}
           {error ? <div>{error}</div> : null}
-          {
-            countryInfo?.map((country)=>(
+          { countryInfo?.map((country)=>(
               <div key={country.name.common} className="country__info tablet:grid tablet:grid-cols-2 items-center laptop:flex gap-5">
-                <div key={countryInfo.id} className="image__wrapper">
+                <div key={country.name.common} className="image__wrapper">
                   <div className="card__wrapper w-full">
                     <img src={country.flags.png} alt={country.name.common} className='' />
                   </div>

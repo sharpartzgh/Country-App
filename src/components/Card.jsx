@@ -59,7 +59,7 @@ const Card = ({ selectedRegion, searchedCountry, setSearchedCountry }) => {
 
       { searchedCountry? searchedCountry.map((country, index) => (
       <Link key={index}  to={`/infopage/${country.name.common}`}>
-      <div className='top mobile:w-[230px] mobile:m-auto rounded-lg bg-white dark:bg-[#2B3844] dark:text-[#fff] h-[300px] font-Nunito shadow-lg '>
+      <div className='top mobile:w-[100%] mobile:m-auto rounded-lg bg-white dark:bg-[#2B3844] dark:text-[#fff] h-[300px] font-Nunito shadow-lg '>
           <div>
             <img src={country.flags.png} alt={country.name.common} className=' w-[100%] h-[120px] rounded-t-lg ' />
           </div>
@@ -82,7 +82,7 @@ const Card = ({ selectedRegion, searchedCountry, setSearchedCountry }) => {
         </div></Link>
       )) : countries.map((country, index) => (
         <Link  key={index} to={`/infopage/${country.name.common}`}>
-        <div  className='top mobile:w-[230px] mobile:m-auto rounded-lg bg-white dark:bg-[#2B3844] dark:text-[#fff] h-[300px] font-Nunito shadow-lg '>
+        <div  className='top mobile:w-[100%] mobile:m-auto rounded-lg bg-white dark:bg-[#2B3844] dark:text-[#fff] h-[300px] font-Nunito shadow-lg '>
           <div>
             <img src={country.flags.png} alt={country.name.common} className=' w-[100%] h-[120px] rounded-t-lg ' />
           </div>

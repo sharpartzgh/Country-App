@@ -43,12 +43,10 @@ function App() {
               </div>
             </header>
           <div>
-          
               <Routes>
                 <Route path='/' element={<Homepage/>}/>
                 <Route path="/infopage/:countryName" element={<Infopage/>}/> 
             </Routes>
-    
         </div>
       </div>
     </>

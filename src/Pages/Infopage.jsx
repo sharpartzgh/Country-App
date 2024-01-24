@@ -11,7 +11,15 @@ const Infopage = () => {
   const [countryInfo, setCountryInfo] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
-  // const [borderCountryDetails, setBorderCountryDetails] = useState([]);
+
+
+
+// fetching just the border countries and coverting it short(acronyms)  such as 'USA',GH' to fullName 'USA => United State of America', 'GH => Ghana' so that when these border countries is click it picks the entire country fullName and display its information on the infopage. was having headache when i click on the acronyms it displays other countries as well on the infopage. 
+
+// wasted some hours here though.
+
+// Only God and I know the stress i went through
+
 
 
 useEffect(() => {
@@ -23,32 +31,50 @@ useEffect(() => {
       if (!countryName) {
         throw new Error('Country code is undefined');
       }
+
       const response = await axios.get(`https://restcountries.com/v3.1/name/${countryName}`);
 
       if (!response || response.status !== 200) {
-        throw new Error('Something went wrong');
+        if (response.status === 404) {
+          throw new Error(`Country with code ${countryName} not found.`);
+        } else {
+          throw new Error('Something went wrong');
+        }
       }
 
       const data = response.data;
       console.log('Response:', data);
 
-      // Extract borders from the first country in the response
-      const { borders } = data[0];
+      // Fetch border countries
+      const borderCountries = await Promise.all(
+        data[0]?.borders?.map(async (shortName) => {
+          try {
+            const borderResponse = await axios.get(`https://restcountries.com/v3.1/name/${shortName}`);
+            
+            if (!borderResponse || borderResponse.status !== 200 || !Array.isArray(borderResponse.data)) {
+              throw new Error(`Invalid response for ${shortName}`);
+            }
 
-      // Create a dynamic mapping of abbreviations to full names
-      const abbreviationToFullName = {};
-      data.forEach((country) => {
-        abbreviationToFullName[country.cca3] = country.name?.common || country.cca3;
-      });
+            const borderData = borderResponse.data[0];
+            return { shortName, fullName: borderData.name.common };
+          } catch (borderError) {
+            if (borderError.response && borderError.response.status === 404) {
+              console.warn(`Border country ${shortName} not found.`);
+              return null; // Ignore this border country
+            } else {
+              throw borderError;
+            }
+          }
+        }) || []
+      );
 
-      // Map the abbreviated borders to their full names using the dynamic mapping
-      const fullNames = borders.map((borderAcronyms) => {
-        return abbreviationToFullName[borderAcronyms] || borderAcronyms;
-      });
+      // Add border countries to main country info
+      const countryInfoWithBorders = {
+        ...data[0],
+        borders: borderCountries.filter(Boolean),
+      };
 
-      console.log("Full Names of Borders:", fullNames);
-
-      setCountryInfo(data);
+      setCountryInfo([countryInfoWithBorders]);
       setIsLoading(false);
     } catch (error) {
       setIsLoading(false);
@@ -59,80 +85,8 @@ useEffect(() => {
 
   getCountryInfo();
 }, [countryName]);
-  
-
-const getBorderCountries = () => {
-  if (!countryInfo || !countryInfo.length) {
-    return [];
-  }
-
-  const { borders } = countryInfo[0];
-
-  if (!borders || !borders.length) {
-    return [];
-  }
-
-  // Create a dynamic mapping of abbreviations to full names
-  const abbreviationToFullName = {};
-  countryInfo.forEach((country) => {
-    abbreviationToFullName[country.cca3] = country.name?.common || country.cca3;
-  });
-
-  // Map the abbreviated borders to their full names using the dynamic mapping
-  const fullNames = borders.map((borderAcronyms) => {
-    return abbreviationToFullName[borderAcronyms] || borderAcronyms;
-  });
-
-  console.log("Full Names of Borders:", fullNames);
-
-  return fullNames;
-};
-
-
-// fetching just the border countries and coverting it short(acronyms)  such as 'USA',GH' to fullName 'USA => United State of America', 'GH => Ghana' so that when these border countries is click it picks the entire country fullName and display its information on the infopage. was having headache when i click on the acronyms it displays other countries as well on the infopage. 
-// wasted some hours here though.
-
-//if you have some shortcut kindly increase this counter to guide the next 
-
-// const fetchBorderCountryDetails = async (countryInfo) => {
-//   try {
-//     if (Array.isArray(countryInfo) && countryInfo.length > 0) {
-//       const borderDetailsPromises = countryInfo[0].borders?.slice(0, 3).map(async (shortName) => {
-//         try {
-//           const response = await axios.get(`https://restcountries.com/v3.1/name/${shortName}`);
-          
-//           if (!response || response.status !== 200 || !Array.isArray(response.data)) {
-//             throw new Error(`Invalid response for ${shortName}`);
-//           }
-          
-//           const data = response.data[0];
-//           return { shortName, fullName: data.name.common };
-//         } catch (error) {
-//           // Handle 404 errors
-//           console.error(`Error fetching border country data for ${shortName}:`, error);
-//           return null;
-//         }
-//       });
-
-//       const borderDetails = await Promise.all(borderDetailsPromises);
-//       setBorderCountryDetails(borderDetails.filter(Boolean)); // Filter out null values
-//     }
-//   } catch (error) {
-//     console.error('Error fetching border country data:', error);
-//   }
-// };
-
-
-
-// useEffect(() => {
-//   fetchBorderCountryDetails();
-//   console.log('Country Info:', countryInfo);
-//   console.log('Border Country Details:', borderCountryDetails);
-// }, [countryInfo, borderCountryDetails]);
 
  
-
-
   return (
     <>
       <div className="bg-[#FAFAFA] w-full min-h-screen dark:bg-[#202C36] px-10 py-10 font-Nunito dark:text-white">
@@ -192,14 +146,15 @@ const getBorderCountries = () => {
                       <div className="country__border__wrapper tablet:flex  items-center">
                       <div className="border__title  mobile:text-[14px] tablet:text-[16px] font-semibold w-[40%]">Border Countries:</div>
                       <div className="title__list flex flex-wrap gap-3 w-full">
-                               {getBorderCountries().slice(0,3).map((border, index) => (
-                                <Link key={index} to={`/infopage/${border}`} >
-                                  <div key={index} className="cursor-pointer bg-white shadow-lg dark:bg-[#2B3844] inline-flex my-3 py-1 px-5 rounded-lg">
-                                    {border}
+                      {countryInfo?.map((country) => (
+                            country.borders?.slice(0,3).map(({ shortName, fullName }, index) => (
+                                <Link key={index} to={`/infopage/${fullName}`}>
+                                  <div key={shortName} className="cursor-pointer bg-white shadow-lg dark:bg-[#2B3844] inline-flex my-3 py-1 px-3 rounded-lg">
+                                    {fullName}
                                   </div>
-                                  </Link>
-                                ))}
-                               
+                                </Link>
+                              ))
+                            ))}
                           </div> 
                       </div>
                     </div>

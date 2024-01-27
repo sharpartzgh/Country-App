@@ -59,12 +59,12 @@ const Card = ({ selectedRegion, searchedCountry, setSearchedCountry }) => {
 
       { searchedCountry? searchedCountry.map((country, index) => (
       <Link key={index}  to={`/infopage/${country.name.common}`}>
-      <div className='top mobile:w-[100%] mobile:m-auto rounded-lg bg-white dark:bg-[#2B3844] dark:text-[#fff] h-[300px] font-Nunito shadow-lg '>
+      <div className='top mobile:w-[100%] mobile:m-auto rounded-lg bg-white dark:bg-[#2B3844] dark:text-[#fff] h-[350px] font-Nunito shadow-lg '>
           <div>
-            <img src={country.flags.png} alt={country.name.common} className=' w-[100%] h-[120px] rounded-t-lg ' />
+            <img src={country.flags.png} alt={country.name.common} className=' w-[100%] h-[180px] rounded-t-lg ' />
           </div>
-          <div className=' my-4 pl-5'>
-            <h1 className=' text-[14px] w-full font-extrabold'>{country.name.common}</h1>
+          <div className=' my-3 px-5 w-full'>
+            <h1 className=' text-[16px] w-full font-extrabold text-wrap'>{country.name.common}</h1>
           </div>
           <div className=' flex flex-col gap-2 pl-5 text-[14px]'>
             <div className='flex gap-2'>
@@ -82,12 +82,12 @@ const Card = ({ selectedRegion, searchedCountry, setSearchedCountry }) => {
         </div></Link>
       )) : countries.map((country, index) => (
         <Link  key={index} to={`/infopage/${country.name.common}`}>
-        <div  className='top mobile:w-[100%] mobile:m-auto rounded-lg bg-white dark:bg-[#2B3844] dark:text-[#fff] h-[300px] font-Nunito shadow-lg '>
+        <div  className='top mobile:w-[100%] mobile:m-auto rounded-lg bg-white dark:bg-[#2B3844] dark:text-[#fff] h-[360px] font-Nunito shadow-lg '>
           <div>
-            <img src={country.flags.png} alt={country.name.common} className=' w-[100%] h-[120px] rounded-t-lg ' />
+            <img src={country.flags.png} alt={country.name.common} className=' w-[100%] h-[180px] rounded-t-lg ' />
           </div>
-          <div className=' my-4 pl-5'>
-            <h1 className=' text-[14px] w-full font-extrabold'>{country.name.common}</h1>
+          <div className=" my-3 px-5 w-full">
+            <h1 className=' text-[16px] font-extrabold w-full text-wrap'>{country.name.common}</h1>
           </div>
           <div className=' flex flex-col gap-2 pl-5 text-[14px]'>
             <div className='flex gap-2'>
